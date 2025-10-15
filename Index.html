@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGS Green Sustainergy - Sustainability Audit Proposal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAF8;
+            color: #1a202c;
+            perspective: 1px;
+            transform-style: preserve-3d;
+            height: 100vh;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+        .page {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .page.active {
+            display: block;
+            opacity: 1;
+        }
+        .hero-parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+            z-index: -1;
+            transform: translateZ(-1px) scale(2);
+            height: 50vh;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(248, 250, 248, 0.7); /* Semi-transparent overlay to lighten the image */
+        }
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .section-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: box-shadow 0.3s ease;
+        }
+        .section-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        .notion-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background-color: #e6f4ea;
+            margin-right: 1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background-color: #f8fafc;
+            font-weight: 600;
+        }
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span class="text-2xl font-bold text-gray-800">CGS <span class="text-green-600">Green Sustainergy</span></span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#overview" class="nav-link text-gray-600 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium" data-page="overview">Overview</a>
+                        <a href="#energy" class="nav-link text-gray-600 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium" data-page="energy">Energy Audit</a>
+                        <a href="#water" class="nav-link text-gray-600 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium" data-page="water">Water Audit</a>
+                        <a href="#safety" class="nav-link text-gray-600 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium" data-page="safety">Safety Audit</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-green-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#overview" class="nav-link text-gray-600 hover:text-green-600 block px-3 py-2 rounded-md text-base font-medium" data-page="overview">Overview</a>
+                <a href="#energy" class="nav-link text-gray-600 hover:text-green-600 block px-3 py-2 rounded-md text-base font-medium" data-page="energy">Energy Audit</a>
+                <a href="#water" class="nav-link text-gray-600 hover:text-green-600 block px-3 py-2 rounded-md text-base font-medium" data-page="water">Water Audit</a>
+                <a href="#safety" class="nav-link text-gray-600 hover:text-green-600 block px-3 py-2 rounded-md text-base font-medium" data-page="safety">Safety Audit</a>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 text-center mb-4">
+            Comprehensive Sustainability Audit Proposal
+        </h1>
+        <p class="text-lg text-gray-500 text-center mb-12">
+            For Chikmagalur Government Buildings & Estates
+        </p>
+
+        <!-- Page 1: Overview -->
+        <div id="overview" class="page active">
+            <header class="text-center py-16 rounded-lg mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-green-700">Building a Sustainable Chikmagalur – One Audit at a Time</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    A holistic proposal by CGS Green Sustainergy to assess and optimize the energy, water, and safety performance of all government buildings and estates in Chikmagalur.
+                </p>
+            </header>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="section-card">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Introduction</h3>
+                    <p class="text-gray-600">Our primary goal is to conduct integrated Energy, Water, and Safety audits across all public buildings. The mission is to enhance efficiency, reduce operational costs, and actively support Chikmagalur’s carbon-neutral roadmap for a greener future.</p>
+                </div>
+                <div class="section-card">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Objectives</h3>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Lower operational costs and resource wastage</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Improve safety and compliance with standards</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Achieve measurable environmental impact</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Support NAAC, ESG, and SDG benchmarks</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card mt-8">
+                <h3 class="text-2xl font-semibold mb-6 text-center text-gray-800">Scope Summary</h3>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <a href="#energy" class="nav-link" data-page="energy">
+                        <div class="p-6 rounded-lg hover:bg-green-50 transition-colors">
+                            <span class="text-5xl">⚡</span>
+                            <h4 class="text-xl font-semibold mt-4">Energy Audit</h4>
+                        </div>
+                    </a>
+                    <a href="#water" class="nav-link" data-page="water">
+                        <div class="p-6 rounded-lg hover:bg-green-50 transition-colors">
+                            <span class="text-5xl">💧</span>
+                            <h4 class="text-xl font-semibold mt-4">Water Audit</h4>
+                        </div>
+                    </a>
+                    <a href="#safety" class="nav-link" data-page="safety">
+                        <div class="p-6 rounded-lg hover:bg-green-50 transition-colors">
+                            <span class="text-5xl">🛡️</span>
+                            <h4 class="text-xl font-semibold mt-4">Safety Audit</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="section-card mt-8">
+                <h3 class="text-2xl font-semibold mb-4 text-gray-800">Why CGS Green Sustainergy?</h3>
+                <ul class="space-y-3 text-gray-600">
+                    <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Proven experience in government and public sector audits.</li>
+                    <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Team of certified energy professionals, auditors, and engineers.</li>
+                    <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Commitment to end-to-end implementation support and advisory.</li>
+                </ul>
+            </div>
+            
+            <div class="text-center mt-12">
+                <h3 class="text-2xl font-semibold mb-4">Take the Next Step</h3>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#energy" class="nav-link btn bg-green-600 text-white px-6 py-3 rounded-lg font-semibold" data-page="energy">Explore Energy Audit</a>
+                    <a href="#water" class="nav-link btn bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold" data-page="water">Explore Water Audit</a>
+                    <a href="#safety" class="nav-link btn bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold" data-page="safety">Explore Safety Audit</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 2: Energy Audit -->
+        <div id="energy" class="page">
+            <header class="text-center py-16 rounded-lg mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-green-700">⚡ Empowering Buildings with Efficient Energy Management</h2>
+            </header>
+
+            <div class="section-card">
+                <h3 class="text-2xl font-semibold mb-4">Deep Dive Explanation</h3>
+                <p class="text-gray-600 mb-4">Our energy audit systematically identifies wastage across HVAC, lighting, and electrical systems. We perform detailed analysis including:</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-600">
+                    <li><b>Load profiling</b> to understand consumption patterns.</li>
+                    <li><b>Equipment performance testing</b> for efficiency benchmarking.</li>
+                    <li>Identifying <b>power factor correction</b> opportunities.</li>
+                    <li>Assessing <b>renewable energy feasibility</b> (e.g., solar rooftop).</li>
+                </ul>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="section-card">
+                    <h3 class="text-2xl font-semibold mb-4">Projected Benefits</h3>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead><tr><th>Metric</th><th>Average Improvement</th></tr></thead>
+                            <tbody>
+                                <tr><td>Power Savings</td><td>20–25%</td></tr>
+                                <tr><td>Bill Reduction</td><td>₹1.5–2.0 Lakhs annually/building</td></tr>
+                                <tr><td>ROI Period</td><td>1.5–2 years</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="section-card">
+                    <h3 class="text-2xl font-semibold mb-4">Suitable Buildings</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600">
+                        <li>Administrative blocks & Government Offices</li>
+                        <li>Educational Institutions (Schools, Colleges)</li>
+                        <li>Hospitals and Public Health Centers</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section-card">
+                 <h3 class="text-2xl font-semibold mb-4">Recommended Services</h3>
+                 <p class="text-gray-600">Energy Performance Benchmarking, Solar Rooftop Feasibility Study, Smart Energy Meter Installation, and Energy Efficiency Retrofit Advisory.</p>
+            </div>
+
+            <div class="section-card">
+                <h3 class="text-2xl font-semibold mb-4">Pricing & Cost-Benefit Analysis</h3>
+                <div class="overflow-x-auto">
+                    <table>
+                        <thead><tr><th>Service</th><th>Cost/Building</th><th>Annual Savings</th><th>Payback</th></tr></thead>
+                        <tbody>
+                            <tr><td>Energy Audit</td><td>₹40,000–₹50,000</td><td>₹1.5–2.0 Lakhs</td><td>&lt; 2 years</td></tr>
+                            <tr><td>Solar Feasibility</td><td>₹15,000</td><td>—</td><td>—</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-gray-500 mt-4 italic">*Savings values are estimates and may vary based on real-time consumption, tariffs, and site-specific conditions.</p>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#water" class="nav-link btn bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold" data-page="water">Proceed to Water Audit →</a>
+            </div>
+        </div>
+
+        <!-- Page 3: Water Audit -->
+        <div id="water" class="page">
+             <header class="text-center py-16 rounded-lg mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-700">💧 Securing Every Drop for a Sustainable Future</h2>
+            </header>
+
+            <div class="section-card">
+                <h3 class="text-2xl font-semibold mb-4">Deep Dive Explanation</h3>
+                <p class="text-gray-600 mb-4">We employ precise methods like flow mapping, consumption benchmarking, and advanced leak detection. Our audit also assesses water reuse feasibility, which is critical for drought-prone regions like Chikmagalur to ensure water security.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                 <div class="section-card">
+                    <h3 class="text-2xl font-semibold mb-4">Projected Benefits</h3>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead><tr><th>Metric</th><th>Average Savings</th></tr></thead>
+                            <tbody>
+                                <tr><td>Water Use Reduction</td><td>15–30%</td></tr>
+                                <tr><td>Cost Savings</td><td>₹50,000–₹1 Lakh annually/building</td></tr>
+                                <tr><td>Improved Reuse Ratio</td><td>25–40%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="section-card">
+                    <h3 class="text-2xl font-semibold mb-4">Suitable Buildings</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600">
+                        <li>Schools, Hostels, and Residential Quarters</li>
+                        <li>Office Buildings and Administrative Centers</li>
+                        <li>Government Guest Houses</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                 <h3 class="text-2xl font-semibold mb-4">Recommended Services</h3>
+                 <p class="text-gray-600">Flow Meter Installation & Monitoring, Greywater Reuse System Design, and Rainwater Harvesting Optimization.</p>
+            </div>
+            
+            <div class="section-card">
+                <h3 class="text-2xl font-semibold mb-4">Pricing & Cost-Benefit Analysis</h3>
+                <div class="overflow-x-auto">
+                    <table>
+                        <thead><tr><th>Service</th><th>Cost/Building</th><th>Annual Savings</th><th>Payback</th></tr></thead>
+                        <tbody>
+                            <tr><td>Water Audit</td><td>₹25,000–₹30,000</td><td>~ ₹1 Lakh</td><td>&lt; 1 year</td></tr>
+                            <tr><td>Reuse Feasibility</td><td>₹10,000</td><td>—</td><td>—</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-gray-500 mt-4 italic">*Savings values are estimates and may vary based on real-time consumption, tariffs, and site-specific conditions.</p>
+            </div>
+
+            <div class="text-center mt-12">
+                 <a href="#safety" class="nav-link btn bg-gray-700 text-white px-8 py-3 rounded-lg font-semibold" data-page="safety">Proceed to Safety Audit →</a>
+            </div>
+        </div>
+
+        <!-- Page 4: Safety Audit -->
+        <div id="safety" class="page">
+            <header class="text-center py-16 rounded-lg mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">🛡️ Ensuring Safety, Compliance, and Peace of Mind</h2>
+            </header>
+
+            <div class="section-card">
+                <h3 class="text-2xl font-semibold mb-4">Deep Dive Explanation</h3>
+                <p class="text-gray-600 mb-4">Our safety audit comprehensively assesses building-level fire safety, electrical safety, and structural compliance. Key components include:</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-600">
+                    <li><b>Fire system adequacy check</b> against national building codes.</li>
+                    <li><b>Electrical load risk analysis</b> to prevent hazards.</li>
+                    <li><b>Structural inspection</b> and a detailed safety gap report.</li>
+                </ul>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                 <div class="section-card">
+                    <h3 class="text-2xl font-semibold mb-4">Projected Benefits</h3>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead><tr><th>Parameter</th><th>Outcome</th></tr></thead>
+                            <tbody>
+                                <tr><td>Fire Safety Compliance</td><td>100% readiness</td></tr>
+                                <tr><td>Risk of Equipment Damage</td><td>Reduced by 50%</td></tr>
+                                <tr><td>Insurance Benefits</td><td>10–15% premium reduction</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="section-card">
+                    <h3 class="text-2xl font-semibold mb-4">Suitable Buildings</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600">
+                        <li>Hospitals and Public Health Centers</li>
+                        <li>Schools and Educational Campuses</li>
+                        <li>High-occupancy Administrative Offices</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section-card">
+                 <h3 class="text-2xl font-semibold mb-4">Recommended Services</h3>
+                 <p class="text-gray-600">Fire & Electrical Safety Testing, Emergency Preparedness Plan Development, and Compliance Certification Advisory.</p>
+            </div>
+            
+            <div class="section-card">
+                <h3 class="text-2xl font-semibold mb-4">Pricing & Cost-Benefit Analysis</h3>
+                 <div class="overflow-x-auto">
+                    <table>
+                        <thead><tr><th>Service</th><th>Cost/Building</th><th>Savings/Value</th><th>Payback</th></tr></thead>
+                        <tbody>
+                            <tr><td>Safety Audit</td><td>₹35,000–₹40,000</td><td>Indirect ROI (risk reduction, compliance)</td><td>—</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-gray-500 mt-4 italic">*Value derived from risk reduction and compliance is an estimate and can vary based on specific site conditions and insurance policies.</p>
+            </div>
+            <div class="text-center mt-12">
+                 <a href="#overview" class="nav-link btn bg-green-600 text-white px-8 py-3 rounded-lg font-semibold" data-page="overview">Back to Overview</a>
+            </div>
+        </div>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-green-50 to-teal-50 text-gray-800 mt-20">
+        <div class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="text-2xl font-bold">CGS Green Sustainergy Pvt. Ltd.</h3>
+            <p class="mt-2 text-lg">“Driving Sustainability, Building the Future.”</p>
+            <div class="mt-6">
+                <p class="text-gray-600">sb@cgs-green.com | +91 8838787292, +91 9840705464</p>
+                <p class="mt-2 text-sm text-gray-500">Copyright © 2025 CGS Green Sustainergy</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            function showPage(pageId) {
+                pages.forEach(page => {
+                    if (page.id === pageId) {
+                        page.classList.add('active');
+                    } else {
+                        page.classList.remove('active');
+                    }
+                });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Close mobile menu on navigation
+                mobileMenu.classList.add('hidden');
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.dataset.page;
+                    showPage(pageId);
+                    history.pushState(null, '', `#${pageId}`);
+                });
+            });
+
+            // Handle browser back/forward
+            window.addEventListener('popstate', () => {
+                const pageId = location.hash.substring(1) || 'overview';
+                showPage(pageId);
+            });
+
+            // Initial page load
+            const initialPageId = location.hash.substring(1) || 'overview';
+            showPage(initialPageId);
+            
+            // Mobile menu toggle
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Parallax effect
+            const body = document.querySelector('body');
+            window.addEventListener('scroll', function() {
+                const offset = window.pageYOffset;
+                body.style.backgroundPositionY = offset * 0.7 + 'px';
+            });
+        });
+    </script>
+</body>
+</html>
+
